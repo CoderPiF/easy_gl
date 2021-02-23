@@ -1,0 +1,7 @@
+*~
+*.swp
+.DS_Store
+xcuserdata/
+Pods/
+*.orig
+*.xcworkspace

@@ -1,0 +1,4 @@
+[submodule "src/3rd/headers/glm"]
+	path = src/3rd/headers/glm
+	url = https://github.com/g-truc/glm.git
+	branch = master
