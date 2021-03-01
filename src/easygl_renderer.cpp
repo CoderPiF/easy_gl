@@ -30,7 +30,7 @@ void RendererBase::invalidateFBO()
 void RendererBase::invalidate()
 {
     EASYGL_AUTO_LOCK(_renderMutex);
-    invalidateRenderBuf();
+    invalidateAttachments();
     invalidateFBO();
 }
 
@@ -48,18 +48,56 @@ bool RendererBase::setup()
         _fbo = 0;
     };
     
-    EASYGL_CHECK_ERROR(glBindFramebuffer(GL_FRAMEBUFFER, _fbo));
+
+    bool isSetAttachmentOK = onSizeUpdate();
+    EASYGL_ASSERT(isSetAttachmentOK, "setup attachments fail");
+    if (!isSetAttachmentOK) { return false; }
     
-    bool isSetupRBOSuccess = setupRenderBuf();
-    EASYGL_ASSERT(isSetupRBOSuccess, "setup render buffer fail");
-    if (!isSetupRBOSuccess) { return false; }
+    rollback.dismiss();
+    return true;
+}
+
+bool RendererBase::onSizeUpdate()
+{
+    EASYGL_AUTO_LOCK(_renderMutex);
+    if (_fbo == 0) { return false; }
+    
+    EASYGL_CHECK_ERROR(glBindFramebuffer(GL_FRAMEBUFFER, _fbo));
+    EASYGL_ASSERT(_width > 0 && _height > 0, "size must > 0 before setup attachments");
+    
+    bool isRefreshAttachmentsOK = refreshAttachments();
+    EASYGL_ASSERT(isRefreshAttachmentsOK, "refresh attachments fail!");
+    if (!isRefreshAttachmentsOK) { return false; }
     
     GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
     EASYGL_ASSERT(status == GL_FRAMEBUFFER_COMPLETE, "fbo complete fail");
-    if (status != GL_FRAMEBUFFER_COMPLETE) { return false; }
+    if (status == GL_FRAMEBUFFER_COMPLETE) { return true; }
+    
+    invalidateAttachments();
+    return false;
+}
 
-    rollback.dismiss();
-    return true;
+void RendererBase::setSize(GLsizei width, GLsizei height)
+{
+    EASYGL_AUTO_LOCK(_renderMutex);
+    if (_width == width && _height == height) {
+        return;
+    }
+    _width = width;
+    _height = height;
+    onSizeUpdate();
+}
+
+GLsizei RendererBase::width() const
+{
+    EASYGL_AUTO_LOCK(_renderMutex);
+    return _width;
+}
+
+GLsizei RendererBase::height() const
+{
+    EASYGL_AUTO_LOCK(_renderMutex);
+    return _height;
 }
 
 void RendererBase::onBeforeRender() {}

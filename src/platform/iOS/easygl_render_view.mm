@@ -7,14 +7,13 @@
 #include "easygl_scope_guard.hpp"
 
 using namespace easy_gl;
-EasyGLRenderView::EasyGLRenderView(const Context::Ptr &ctx)
-: RendererBase(ctx), _width(0), _height(0)
+EasyGLRenderView::EasyGLRenderView(const Context::Ptr &ctx) : RendererBase(ctx)
 {
 }
 
 EasyGLRenderView::~EasyGLRenderView()
 {
-    invalidateRenderBuf();
+    invalidateAttachments();
 }
 
 void EasyGLRenderView::attachLayer(CAEAGLLayer *layer)
@@ -27,16 +26,11 @@ void EasyGLRenderView::attachLayer(CAEAGLLayer *layer)
     };
 }
 
-void EasyGLRenderView::setSize(GLsizei width, GLsizei height)
-{
-    _width = width;
-    _height = height;
-}
-
-bool EasyGLRenderView::setupRenderBuf()
+bool EasyGLRenderView::refreshAttachments()
 {
     EASYGL_AUTO_LOCK(_renderMutex);
-    if (_colorRenderBuf > 0) { return true; }
+    invalidateAttachments();
+    
     EASYGL_ASSERT(_attachLayer != nil, "MUST ATTACH to layer before setup!");
     if (!_attachLayer) { return false; }
     
@@ -60,7 +54,7 @@ bool EasyGLRenderView::setupRenderBuf()
     return true;
 }
 
-void EasyGLRenderView::invalidateRenderBuf()
+void EasyGLRenderView::invalidateAttachments()
 {
     EASYGL_AUTO_LOCK(_renderMutex);
     if (_colorRenderBuf > 0)

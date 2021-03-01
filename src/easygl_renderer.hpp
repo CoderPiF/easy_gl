@@ -21,7 +21,7 @@ public:
     
     virtual void render() = 0;
     virtual void invalidate() = 0;
-    
+
     virtual ~Renderer();
 protected:
     Renderer(const Context::Ptr &);
@@ -38,18 +38,27 @@ public:
     virtual void render() override;
     virtual void invalidate() override;
     
+    void setSize(GLsizei width, GLsizei height);
+    GLsizei width() const;
+    GLsizei height() const;
+    
     virtual ~RendererBase();
 protected:
     bool setup();
     void invalidateFBO();
-    virtual bool setupRenderBuf() = 0;
-    virtual void invalidateRenderBuf() = 0;
+    
+    virtual bool refreshAttachments() = 0;
+    virtual void invalidateAttachments() = 0;
+    
     virtual void onBeforeRender();
     virtual void onAfterRender();
+    virtual bool onSizeUpdate();
     RendererBase(const Context::Ptr &);
 
-    std::recursive_mutex _renderMutex;
+    mutable std::recursive_mutex _renderMutex;
     GLuint _fbo = 0;
+    GLsizei _width = 0;
+    GLsizei _height = 0;
     
     std::mutex _mutex;
     std::vector<ShapePtr> _shapes;
