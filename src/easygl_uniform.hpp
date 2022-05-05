@@ -6,6 +6,7 @@
 #define easygl_uniform_h
 
 #include "easygl_anytype.hpp"
+#include "easygl_texture.hpp"
 #include <map>
 #include <string>
 #include <memory>
@@ -35,10 +36,16 @@ public:
     
     void sync(const uniform_data &data) const
     {
+        GLenum textureUnit = 0;
         for (auto &info : data)
         {
             auto iter = _locations.find(info.first);
             EASYGL_ASSERT(iter != _locations.end(), "can not found uniform : " + info.first);
+            auto texture = std::dynamic_pointer_cast<GLTexture2D>(info.second);
+            if (texture)
+            {
+                texture->setUnit(textureUnit++);
+            }
             info.second->syncUniform(iter->second);
         }
     }
@@ -74,6 +81,7 @@ public:
         auto iter = _uniforms.find(key);
         if (iter == _uniforms.end())
         {
+            EASYGL_ASSERT(false, "Can not found the uniform");
             return false;
         }
         
@@ -90,6 +98,22 @@ public:
     {
         return getUniform<T, 1>(key, &v);
     }
+    
+    void setTexture(const std::string &key, const TextureData &v)
+    {
+        _uniforms[key] = std::make_shared<GLTexture2D>(v);
+    }
+    TextureData getTexture(const std::string &key) const
+    {
+        auto iter = _uniforms.find(key);
+        if (iter == _uniforms.end())
+        {
+            EASYGL_ASSERT(false, "Can not found the texture uniform");
+            return TextureData();
+        }
+        
+        return std::static_pointer_cast<GLTexture2D>(iter->second)->value();
+    }
 
 private:
     uniform_data _uniforms;
@@ -102,11 +126,14 @@ struct _name : virtual public UniformBase {
 void _key(const _type &v) { setUniform<_type>(#_key, v); } \
 _type _key() const { _type tmp; getUniform<_type>(#_key, &tmp); return tmp; }
 
+#define DEF_TEXTURE(_key) \
+void _key(const TextureData &v) { setTexture(#_key, v); } \
+TextureData _key() const { return getTexture(#_key); }
+
 #define DEF_UNIFORM_ARRAY(_type, _key, _n) \
 void _key(const _type v[_n]) { setUniform<_type, _n>(#_key, v); } \
 
 #define DEF_UNIFORM_END };
-
 
 #define __DEF_UNIFORM_DESCRIPTOR(_name) _locations[#_name] = -1;
 #define EXPAND_UNIFORM_DESCRIPTOR(...) EASYGL_EXPAND_ARGS(__DEF_UNIFORM_DESCRIPTOR, ##__VA_ARGS__)

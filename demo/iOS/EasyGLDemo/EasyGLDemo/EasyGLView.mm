@@ -35,8 +35,8 @@
         _easygl->addRenderer(_renderView);
         
 //        [self helloTriangle1];
-        [self helloTriangle2];
-//        [self texturesCombined];
+//        [self helloTriangle2];
+        [self texturesCombined];
 //        [self coordinateSystemsMultiple];
 //        [self camera];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -95,7 +95,32 @@
 
 - (void) texturesCombined
 {
+    using namespace easy_gl;
+    using namespace samples;
     
+    auto programMgr = _easygl->context()->resources()->programMgr();
+    auto program = programMgr->makeFromFixed<TexCoordVSH, TexCoordVSHSrc, TextureFSH, TextureFSHSrc>();
+    
+    auto shape = std::make_shared<ShapeBase<TextureProgram>>(program, GL_TRIANGLE_STRIP);
+    shape->updateVertexs(4, [&](TexCoordVertexAttr *vertex){
+        vertex[0].pos = glm::vec2(-1, 1);
+        vertex[0].texCoord = glm::vec2(0, 1);
+        vertex[1].pos = glm::vec2(-1, -1);
+        vertex[1].texCoord = glm::vec2(0, 0);
+        vertex[2].pos = glm::vec2(1, 1);
+        vertex[2].texCoord = glm::vec2(1, 1);
+        vertex[3].pos = glm::vec2(1, -1);
+        vertex[3].texCoord = glm::vec2(1, 0);
+    });
+    NSString *path = [NSBundle.mainBundle pathForResource:@"test.jpeg" ofType:@""];
+    shape->updateUniforms([&](TexUniform *uniform){
+        std::string filePath = path.UTF8String;
+        auto dataProvider = ITextureDataProvider::CreateFromFile(filePath);
+        TextureData data(_easygl->context(), dataProvider);
+        uniform->texture1(data);
+    });
+    
+    _renderView->addShape(shape);
 }
 
 - (void) coordinateSystemsMultiple

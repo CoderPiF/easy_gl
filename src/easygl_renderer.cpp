@@ -48,7 +48,6 @@ bool RendererBase::setup()
         _fbo = 0;
     };
     
-
     bool isSetAttachmentOK = onSizeUpdate();
     EASYGL_ASSERT(isSetAttachmentOK, "setup attachments fail");
     if (!isSetAttachmentOK) { return false; }

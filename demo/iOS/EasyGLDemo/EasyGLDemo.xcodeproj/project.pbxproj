@@ -25,6 +25,9 @@
 		02001B3E25E0A2790045134E /* easygl_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02001B3D25E0A2790045134E /* easygl_ios.mm */; };
 		02001B4925E0AF440045134E /* easygl_render_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02001B4825E0AF430045134E /* easygl_render_view.mm */; };
 		02001B4E25E0BC2C0045134E /* EasyGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02001B4D25E0BC2C0045134E /* EasyGLView.mm */; };
+		02865A72281E869200DD743D /* easygl_texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02865A70281E869200DD743D /* easygl_texture.cpp */; };
+		02865A74281F0A7700DD743D /* easygl_stb_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02865A73281F0A7700DD743D /* easygl_stb_image.cpp */; };
+		02865A77281F178500DD743D /* test.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 02865A76281F178500DD743D /* test.jpeg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +75,10 @@
 		0247989F25E3B91700733EC1 /* easygl_anytype.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = easygl_anytype.hpp; path = ../../../../src/easygl_anytype.hpp; sourceTree = "<group>"; };
 		024798A125E3BB1100733EC1 /* easygl_uniform_setter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = easygl_uniform_setter.hpp; path = ../../../../src/easygl_uniform_setter.hpp; sourceTree = "<group>"; };
 		024798A325E509B000733EC1 /* easygl_customtypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = easygl_customtypes.hpp; path = ../../../../src/easygl_customtypes.hpp; sourceTree = "<group>"; };
+		02865A70281E869200DD743D /* easygl_texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = easygl_texture.cpp; path = ../../../../src/easygl_texture.cpp; sourceTree = "<group>"; };
+		02865A71281E869200DD743D /* easygl_texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = easygl_texture.hpp; path = ../../../../src/easygl_texture.hpp; sourceTree = "<group>"; };
+		02865A73281F0A7700DD743D /* easygl_stb_image.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = easygl_stb_image.cpp; path = ../../../../src/easygl_stb_image.cpp; sourceTree = "<group>"; };
+		02865A76281F178500DD743D /* test.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpeg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +111,7 @@
 		02001AFC25E0A1140045134E /* EasyGLDemo */ = {
 			isa = PBXGroup;
 			children = (
+				02865A75281F178500DD743D /* resources */,
 				02001B1725E0A14E0045134E /* easygl */,
 				02001AFD25E0A1140045134E /* AppDelegate.h */,
 				02001AFE25E0A1140045134E /* AppDelegate.m */,
@@ -131,6 +139,9 @@
 				02001B1D25E0A15F0045134E /* easygl_scope_guard.hpp */,
 				02001B2D25E0A1600045134E /* easygl_types.hpp */,
 				024798A325E509B000733EC1 /* easygl_customtypes.hpp */,
+				02865A73281F0A7700DD743D /* easygl_stb_image.cpp */,
+				02865A70281E869200DD743D /* easygl_texture.cpp */,
+				02865A71281E869200DD743D /* easygl_texture.hpp */,
 				0247989F25E3B91700733EC1 /* easygl_anytype.hpp */,
 				02001B2325E0A15F0045134E /* easygl_uniform.hpp */,
 				024798A125E3BB1100733EC1 /* easygl_uniform_setter.hpp */,
@@ -183,6 +194,15 @@
 				02001B4825E0AF430045134E /* easygl_render_view.mm */,
 			);
 			path = iOS;
+			sourceTree = "<group>";
+		};
+		02865A75281F178500DD743D /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				02865A76281F178500DD743D /* test.jpeg */,
+			);
+			name = resources;
+			path = ../../../../resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -242,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				02001B0D25E0A1160045134E /* LaunchScreen.storyboard in Resources */,
+				02865A77281F178500DD743D /* test.jpeg in Resources */,
 				02001B0A25E0A1160045134E /* Assets.xcassets in Resources */,
 				02001B0825E0A1140045134E /* Main.storyboard in Resources */,
 			);
@@ -255,6 +276,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				02001B0525E0A1140045134E /* ViewController.m in Sources */,
+				02865A74281F0A7700DD743D /* easygl_stb_image.cpp in Sources */,
 				02001B3725E0A1600045134E /* easygl_context.cpp in Sources */,
 				02001AFF25E0A1140045134E /* AppDelegate.m in Sources */,
 				02001B3E25E0A2790045134E /* easygl_ios.mm in Sources */,
@@ -262,6 +284,7 @@
 				02001B4E25E0BC2C0045134E /* EasyGLView.mm in Sources */,
 				02001B3325E0A1600045134E /* easygl_renderer.cpp in Sources */,
 				02001B1025E0A1160045134E /* main.m in Sources */,
+				02865A72281E869200DD743D /* easygl_texture.cpp in Sources */,
 				02001B3825E0A1600045134E /* easygl_utils.cpp in Sources */,
 				02001B3225E0A1600045134E /* easygl_program.cpp in Sources */,
 				02001B3125E0A1600045134E /* easygl.cpp in Sources */,
@@ -411,16 +434,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3SQSZ2P8DJ;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../src/3rd/headers/glm\"";
+				DEVELOPMENT_TEAM = JX5L5MUC33;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../../src/3rd/headers/glm\"",
+					"\"$(SRCROOT)/../../../src/3rd/headers\"",
+				);
 				INFOPLIST_FILE = EasyGLDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = coder.pi.EasyGLDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = org.coder.pi.EasyGLDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -430,16 +458,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3SQSZ2P8DJ;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../src/3rd/headers/glm\"";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../../src/3rd/headers/glm\"",
+					"\"$(SRCROOT)/../../../src/3rd/headers\"",
+				);
 				INFOPLIST_FILE = EasyGLDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = coder.pi.EasyGLDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = org.coder.pi.EasyGLDemo2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

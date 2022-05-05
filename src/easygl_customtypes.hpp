@@ -80,11 +80,6 @@ struct RGB
     }
 };
 
-struct Sampler2D
-{
-    // TODO:
-};
-
 NS_EASYGL_END
 
 #endif /* easygl_customtypes_h */

@@ -11,7 +11,7 @@ public:
     using Task = EasyGLIOS::Task;
     EasyGLIOSImp()
     {
-        _eglCtx = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+        _eglCtx = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
     }
     
     ~EasyGLIOSImp()

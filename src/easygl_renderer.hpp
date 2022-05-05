@@ -28,8 +28,22 @@ protected:
     Context::Ptr _ctx;
 };
 
+class RendererState
+{
+public:
+    using Ptr = std::shared_ptr<RendererState>;
+    // TODO: 加入状态：viewport, scissor
+    // TODO: depth_test, depth_mask, depth_func,
+    // TODO: stencil_test, stencil_
+//    depth_test, depthFunc stencil_test, blend, blend_func
+    virtual ~RendererState() {};
+
+protected:
+    // TODO: viewport, scissor, ...
+};
+
 class Shape;
-class RendererBase : public Renderer
+class RendererBase : public Renderer, public RendererState
 {
 public:
     using ShapePtr = std::shared_ptr<Shape>;
@@ -62,6 +76,27 @@ protected:
     
     std::mutex _mutex;
     std::vector<ShapePtr> _shapes;
+};
+
+class RendererAttachmentState
+{
+public:
+    enum Attachment
+    {
+        Attachment_Color    = 1 << 0,
+        Attachment_Depth    = 1 << 1,
+        Attachment_Stencil  = 1 << 2,
+    };
+    
+    // TODO: push, pop State: renderBuffer, depthBuffer, stencilBuffer
+    // TODO: colorClear, depthClear, stencilClear
+    void setClearColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
+    void setClearDepth(GLclampf depth);
+    void clear(Attachment attachments);
+    
+    virtual ~RendererAttachmentState() {};
+protected:
+    
 };
 
 NS_EASYGL_END

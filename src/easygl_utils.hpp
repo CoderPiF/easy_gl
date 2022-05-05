@@ -19,16 +19,16 @@
 
 #else // end of macos; begin of iOS
 #define USING_OPENGL_ES
-#include <OpenGLES/ES2/gl.h>
-#include <OpenGLES/ES2/glext.h>
+#include <OpenGLES/ES3/gl.h>
+#include <OpenGLES/ES3/glext.h>
 
 #endif // end of iOS
 
 #elif defined(__ANDROID__) // end of __APPLE__; begin of android
 #define USING_OPENGL_ES
 #include <EGL/egl.h>
-#include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
+#include <GLES3/gl3.h>
+#include <GLES3/gl3ext.h>
 
 #include <android/native_window.h> // requires ndk r5 or newer
 #include <android/native_window_jni.h> // requires ndk r5 or newer
@@ -36,10 +36,10 @@
 #define GLhalf GLshort
 
 //VAO OES extensions must be load with eglGetProcAddress
-extern PFNGLGENVERTEXARRAYSOESPROC glGenVertexArraysOES;
-extern PFNGLBINDVERTEXARRAYOESPROC glBindVertexArrayOES;
-extern PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArraysOES;
-extern PFNGLISVERTEXARRAYOESPROC glIsVertexArrayOES;
+//extern PFNGLGENVERTEXARRAYSOESPROC glGenVertexArraysOES;
+//extern PFNGLBINDVERTEXARRAYOESPROC glBindVertexArrayOES;
+//extern PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArraysOES;
+//extern PFNGLISVERTEXARRAYOESPROC glIsVertexArrayOES;
 
 void loadVAOFunctions();
 
@@ -53,16 +53,15 @@ void loadVAOFunctions();
 #endif // end of ubuntu
 
 #ifdef USING_OPENGL_ES
+
 #define GLdouble double
 #define GL_DOUBLE GL_FLOAT
-#define GL_RED GL_LUMINANCE
 
-#define GL_DEPTH24_STENCIL8 GL_DEPTH24_STENCIL8_OES
-#define glGenVertexArrays glGenVertexArraysOES
-#define glBindVertexArray glBindVertexArrayOES
-#define glDeleteVertexArrays glDeleteVertexArraysOES
-#define glIsVertexArray glIsVertexArrayOES
-#endif // end of opengl es
+#define EASYGL_SHADER_HEADER "#version 300 es\n"
+#else // end of opengl es
+
+#define EASYGL_SHADER_HEADER "#version 300 core\n"
+#endif // end of opengl core
 
 #ifdef EASYGL_DEBUG
 #define EASYGL_CHECK_ERROR_(_x, _s) \

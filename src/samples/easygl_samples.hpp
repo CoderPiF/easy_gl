@@ -31,6 +31,17 @@ DEF_UNIFORM(RGB, color);
 DEF_UNIFORM_END
 DEF_UNIFORM_DESCRIPTOR(RGBUniform, color);
 
+DEF_VERTEX_BEGIN(TexCoordVertexAttr)
+DEF_VERTEX(glm::vec2, pos);
+DEF_VERTEX(glm::vec2, texCoord);
+DEF_VERTEX_END
+DEF_VERTEX_DESCRIPTOR(TexCoordVertexAttr, pos, texCoord)
+
+DEF_UNIFORM_BEGIN(TexUniform)
+DEF_TEXTURE(texture1)
+DEF_UNIFORM_END
+DEF_UNIFORM_DESCRIPTOR(TexUniform, texture1)
+
 // shapes
 // 固定颜色shape
 using PositionVSH = VertexShader<PositionVertexAttr>;
@@ -43,6 +54,12 @@ using PositionRGBVSH = VertexShader<PositionRGBVertexAttr>;
 using NoUniformFSH = FragmentShader<EmptyUniform>;
 using VaryingRGBProgram = ShaderProgramBase<PositionRGBVSH, NoUniformFSH>;
 using VaryingRGBShape = ShapeBase<VaryingRGBProgram>;
+
+// 纹理
+using TexCoordVSH = VertexShader<TexCoordVertexAttr>;
+using TextureFSH = FragmentShader<TexUniform>;
+using TextureProgram = ShaderProgramBase<TexCoordVSH, TextureFSH>;
+using TextureShape = ShapeBase<TextureProgram>;
 
 NS_EASYGL_END
 
